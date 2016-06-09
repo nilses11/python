@@ -19,7 +19,7 @@ def printneighbors(board):
 		for char in range(len(board[line])):
 			newline+=str(neighbors(board, line, char))
 		newboard.append(newline)
-	printboard(newboard)
+	printSolution(newboard)
 	return board
 
 
@@ -41,8 +41,13 @@ def neighbors(board, x, y):
 		if board[x][y-1]=="*": count+=1
 	if y < len(board)-1:
 		if board[x][y+1]=="*": count+=1
+
+	if board[x][y]=="*":
+		return "*"
+
 	return count
 
-def printboard(board):
-	for line in board:
-		print line
+def printSolution(board):
+	print '  ABCDEFGHIJ'
+	for i in range(len(board)):
+		print str(i), board[i]
