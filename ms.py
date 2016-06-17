@@ -67,11 +67,10 @@ def neighbors(board, x, y):
 		if board[x][y-1]=="*": count+=1
 	if y < boardsize-1:
 		if board[x][y+1]=="*": count+=1
-
 	if board[x][y]=="*":
 		return "*"
-
 	return count
+
 
 def printSolution(board):
 	print '  0123456789'
@@ -91,9 +90,12 @@ def getVal(line, linexp, fl):
 			s+=" "
 	return s
 
+
 def explore(x, y):
 	if checkBounds(x,y) == -1:
 		return -1
+	if flagged[x][y]:
+		return 0
 	explored[x][y] = True
 	if board[x][y] == '*':
 		return -1
@@ -106,6 +108,7 @@ def explore(x, y):
 			explore(x,y-1)
 		if y < boardsize-1 and not explored[x][y+1]:
 			explore(x,y+1)
+
 
 def flag(x,y):
 	if checkBounds(x,y) == -1:

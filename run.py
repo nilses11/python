@@ -18,7 +18,7 @@ while loop != -1:
 		c,x,y = raw_input().split(' ')
 		if c == 'o':
 			loop = ms.explore(int(y),int(x))
-		if c == 'f':
+		elif c == 'f':
 			ms.flag(int(y),int(x))
 		else:
 			print 'Unknown command:',c
