@@ -1,11 +1,13 @@
 from random import randint
 board = []
 explored = []
+flagged = []
 boardsize = 20
 numbombs = 40
 
 for p in range(boardsize):
 	explored.append([False for i in range(boardsize)])
+	flagged.append([False for i in range(boardsize)])
 
 def createRandomBoard():
 	for i in range(boardsize):
@@ -32,6 +34,8 @@ range(boardsize)]
 
 #createRandomBoard()
 board = createBoardWithExactNumbombs()
+
+#Assert that the board is a square
 assert len(board) == len(board[0])
 
 def printneighbors(board):
@@ -73,27 +77,23 @@ def printSolution(board):
 	print '  0123456789'
 	print ''
 	for i in range(boardsize):
-		print str(i%10), getVal(board[i], explored[i])
+		print str(i%10), getVal(board[i], explored[i], 
+flagged[i])
 
-def getVal(line, linexp):
+def getVal(line, linexp, fl):
 	s = ""
 	for c in range(boardsize):
 		if linexp[c]:
 			s+=line[c]
+		elif fl[c]:
+			s+="f"
 		else:
 			s+=" "
 	return s
 
 def explore(x, y):
-	if x < 0:
+	if checkBounds(x,y) == -1:
 		return -1
-	if y < 0:
-		return -1
-	if x > boardsize-1:
-		return -1
-	if y > boardsize-1:
-		return -1
-
 	explored[x][y] = True
 	if board[x][y] == '*':
 		return -1
@@ -106,3 +106,21 @@ def explore(x, y):
 			explore(x,y-1)
 		if y < boardsize-1 and not explored[x][y+1]:
 			explore(x,y+1)
+
+def flag(x,y):
+	if checkBounds(x,y) == -1:
+		return -1
+	if explored[x][y]:
+		return 0
+	flagged[x][y] = True
+
+
+def checkBounds(x,y):
+	if x < 0:
+		return -1
+	if y < 0:
+		return -1
+	if x > boardsize-1:
+		return -1
+	if y > boardsize-1:
+		return -1

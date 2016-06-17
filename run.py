@@ -1,13 +1,27 @@
 import ms
-
+import pdb
 
 loop = 0
 
-
 ms.printneighbors(ms.board)
+print 'Commands:'
+print '    o - open'
+print '    f - flag'
+print '    TODO'
+print 'Example:'
+print '    "o 0 1"'
+print 'opens box at column 0, row 1'
+
 
 while loop != -1:
-	x,y = input()
-	loop = ms.explore(y,x)
-	ms.printneighbors(ms.board)
-
+	try:
+		c,x,y = raw_input().split(' ')
+		if c == 'o':
+			loop = ms.explore(int(y),int(x))
+		if c == 'f':
+			ms.flag(int(y),int(x))
+		else:
+			print 'Unknown command:',c
+		ms.printneighbors(ms.board)
+	except ValueError:
+		print 'Invalid value'
