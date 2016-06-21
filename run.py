@@ -7,6 +7,7 @@ ms.printneighbors(ms.board)
 print 'Commands:'
 print '    o - open'
 print '    f - flag'
+print '    u - unflag'
 print '    TODO'
 print 'Example:'
 print '    "o 0 1"'
@@ -20,6 +21,8 @@ while loop != -1:
 			loop = ms.explore(int(y),int(x))
 		elif c == 'f':
 			ms.flag(int(y),int(x))
+		elif c == 'u':
+			ms.unflag(int(y),int(x))
 		else:
 			print 'Unknown command:',c
 		ms.printneighbors(ms.board)
