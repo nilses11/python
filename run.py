@@ -8,6 +8,7 @@ print 'Commands:'
 print '    o - open'
 print '    f - flag'
 print '    u - unflag'
+print '    s - open all nearby fields that are not flagged'
 print '    TODO'
 print 'Example:'
 print '    "o 0 1"'
@@ -23,6 +24,8 @@ while loop != -1:
 			ms.flag(int(y),int(x))
 		elif c == 'u':
 			ms.unflag(int(y),int(x))
+		elif c == 's':
+			loop = ms.search(int(y),int(x))
 		else:
 			print 'Unknown command:',c
 		ms.printneighbors(ms.board)

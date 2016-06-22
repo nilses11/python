@@ -77,6 +77,8 @@ def explore(x, y):
 		return -1
 	if flagged[x][y]:
 		return 0
+	if explored[x][y] == True:
+		return 0
 	explored[x][y] = True
 	if board[x][y] == '*':
 		return -1
@@ -104,6 +106,26 @@ def unflag(x,y):
 	if explored[x][y]:
 		return 0
 	flagged[x][y] = False
+
+def search(x,y):
+	if checkBounds(x,y) == -1:
+		return -1
+	if explore(x-1,y) == -1:
+		return -1
+	if explore(x+1,y) == -1:
+		return -1
+	if explore(x,y-1) == -1:
+		return -1
+	if explore(x,y+1) == -1:
+		return -1
+	if explore(x-1,y-1) == -1:
+		return -1
+	if explore(x-1,y+1) == -1:
+		return -1
+	if explore(x+1,y-1) == -1:
+		return -1
+	if explore(x+1,y+1) == -1:
+		return -1
 
 
 def checkBounds(x,y):
