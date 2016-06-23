@@ -29,5 +29,8 @@ while loop != -1:
 		else:
 			print 'Unknown command:',c
 		ms.printneighbors(ms.board)
+		if ms.checkIsFinished():
+			print 'You won!'
+			loop = -1
 	except ValueError:
 		print 'Invalid value'

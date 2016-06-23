@@ -138,6 +138,20 @@ def checkBounds(x,y):
 	if y > boardsize-1:
 		return -1
 
+
+def checkIsFinished():
+	for x in range(boardsize):
+		for y in range(boardsize):
+			if not explored[x][y] or flagged[x][y]:
+				return False
+			elif (board[x][y] == "*" and not flagged[x][y]):
+				return False
+			elif (flagged[x][y] and not board[x][y] == "*"):
+				return False
+	return True
+
+			
+
 board = createBoardWithExactNumbombs()
 
 #Assert that the board is a square
