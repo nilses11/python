@@ -142,12 +142,12 @@ def checkBounds(x,y):
 def checkIsFinished():
 	for x in range(boardsize):
 		for y in range(boardsize):
-			if not explored[x][y] or flagged[x][y]:
-				return False
-			elif (board[x][y] == "*" and not flagged[x][y]):
-				return False
-			elif (flagged[x][y] and not board[x][y] == "*"):
-				return False
+			if not explored[x][y]:
+				if flagged[x][y]:
+					if board[x][y] != "*":
+						return False
+				else:
+					return False
 	return True
 
 			
