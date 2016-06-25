@@ -66,6 +66,7 @@ def getVal(line, linexp, fl):
 		if linexp[c]:
 			s+=line[c]
 		elif fl[c]:
+		    #Colorcode for a red f
 			s+="\033[0;31mf\033[0m"
 		else:
 			s+=" "
@@ -74,7 +75,7 @@ def getVal(line, linexp, fl):
 
 def explore(x, y):
 	if checkBounds(x,y) == -1:
-		return -1
+		return 0
 	if flagged[x][y]:
 		return 0
 	if explored[x][y] == True:
@@ -95,21 +96,23 @@ def explore(x, y):
 
 def flag(x,y):
 	if checkBounds(x,y) == -1:
-		return -1
+		return 0
 	if explored[x][y]:
 		return 0
 	flagged[x][y] = True
 
 def unflag(x,y):
 	if checkBounds(x,y) == -1:
-		return -1
+		return 0
 	if explored[x][y]:
 		return 0
 	flagged[x][y] = False
 
 def search(x,y):
 	if checkBounds(x,y) == -1:
-		return -1
+		return 0
+	if not explored[x][y]:
+	    return 0
 	if explore(x-1,y) == -1:
 		return -1
 	if explore(x+1,y) == -1:
