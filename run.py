@@ -1,9 +1,10 @@
 import ms
 import pdb
 
-loop = 0
+loop = True
+status = 0
 
-ms.printneighbors(ms.board)
+#ms.(ms.board)
 print 'Commands:'
 print '    o - open'
 print '    f - flag'
@@ -15,22 +16,32 @@ print '    "o 0 1"'
 print 'opens box at column 0, row 1'
 
 
-while loop != -1:
+while loop:
 	try:
 		c,x,y = raw_input().split(' ')
 		if c == 'o':
-			loop = ms.explore(int(y),int(x))
+			status = ms.explore(int(y),int(x))
 		elif c == 'f':
 			ms.flag(int(y),int(x))
 		elif c == 'u':
 			ms.unflag(int(y),int(x))
 		elif c == 's':
-			loop = ms.search(int(y),int(x))
+			status = ms.search(int(y),int(x))
+		elif c == 'q':
+			print 'Quit'
+			loop = False
+			break
 		else:
 			print 'Unknown command:',c
-		ms.printneighbors(ms.board)
-		if ms.checkIsFinished():
-			print 'You won!'
-			loop = -1
+		
+		if status == -1:
+			ms.printEnd(ms.board)
+			print 'You just lost!'
+			loop = False
+		else:
+			ms.printCurrentState(ms.board)
+			if ms.checkIsFinished():
+				print 'You won!'
+				loop = False
 	except ValueError:
 		print 'Invalid value'
