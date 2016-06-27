@@ -20,16 +20,19 @@ def createBoardWithExactNumbombs():
 		board.append("".join(i))
 	return board
 
-def printneighbors(board):
+def printCurrentState(board):
+	newboard = buildCurrentState(board)
+	printState(newboard, False)
+	return board
+
+def buildCurrentState(board):
 	newboard = []
 	for line in range(boardsize):
 		newline = ""
 		for char in range(boardsize):
 			newline+=str(neighbors(board, line, char))
 		newboard.append(newline)
-	printSolution(newboard)
-	return board
-
+	return newboard
 
 def neighbors(board, x, y):
 	count = 0
@@ -54,16 +57,17 @@ def neighbors(board, x, y):
 	return count
 
 
-def printSolution(board):
+def printState(board, isFinished):
 	print '  01234567890123456789'
 	print ''
 	for i in range(boardsize):
-		print str(i%10), getVal(board[i], explored[i], flagged[i])
+		print str(i%10), getVal(board[i], explored[i], flagged[i], 
+isFinished)
 
-def getVal(line, linexp, fl):
+def getVal(line, linexp, fl, isFinished):
 	s = ""
 	for c in range(boardsize):
-		if linexp[c]:
+		if linexp[c] or isFinished:
 			s+=line[c]
 		elif fl[c]:
 			s+="\033[0;31mf\033[0m"
@@ -150,7 +154,11 @@ def checkIsFinished():
 					return False
 	return True
 
-			
+def printEnd(board):
+	newboard = buildCurrentState(board)
+	printState(newboard, True)
+	return board
+
 
 board = createBoardWithExactNumbombs()
 
