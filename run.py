@@ -1,15 +1,14 @@
 import ms
-import pdb
 
 loop = True
 status = 0
 
-#ms.(ms.board)
 print 'Commands:'
 print '    o - open'
 print '    f - flag'
 print '    u - unflag'
 print '    s - open all nearby fields that are not flagged'
+print '    q - type "q . ." to quit'
 print '    TODO'
 print 'Example:'
 print '    "o 0 1"'
