@@ -1,34 +1,74 @@
 from curses import wrapper
-import curses
+from curses import KEY_DOWN, KEY_UP, KEY_LEFT, KEY_RIGHT
 import pdb
 
-def main(stdscr):
-	stdscr.clear()
-	#stdscr.keypad(False)
-	stdscr.box()
-	#stdscr.curs_set(0)
-	y = 9
-	x = 11
-	#loop = True
+y = 9
+x = 11
+loop = True
+dirt = []
+maxyx = []
 
-	while True:
-		key = stdscr.getkey()
-		if key == 'q':
-			return
-		stdscr.addch(y, x, ' ')
-		y, x = move(key, y, x)
-		stdscr.addch(y, x, '&')
-		stdscr.move(y, x)
+def main(win):
+	global maxyx
+	win.box()
+	maxyx = win.getmaxyx()
+	try:
+		win.curs_set(0)
+	except:
+		pass
+	
+	while loop:
+		key = win.getkey()
+		win.addch(y, x, ' ')
+		if key in keymappings:
+			keymappings[key]()
+		win.move(10, 0)
+		for line in dirt:
+			win.addstr(line)
+			#break
+		win.addch(y, x, '&')
+		win.move(y, x)
 
-def move(key, y, x):
-	if key == 'KEY_DOWN':
-		y+=1
-	elif key == 'KEY_UP':
-		y-=1
-	elif key == 'KEY_LEFT':
-		x-=1
-	elif key == 'KEY_RIGHT':
-		x+=1
-	return y, x
+def quit():
+	global loop
+	loop = False
 
-wrapper(main)
+def moveup():
+	global y
+	y-=1
+
+def moveleft():
+	global x
+	x-=1
+
+def moveright():
+	global x
+	x+=1
+
+def movedown():
+	global y
+	y+=1
+
+def generateDirt():
+	global dirt
+	#pdb.set_trace()
+	for yes in range(maxyx[0]-15):
+		line = ''
+		for xes in range(maxyx[1]):
+			line+='#'
+		dirt.append(line)
+	#pdb.set_trace()
+
+keymappings = {
+		'KEY_DOWN' : movedown,
+		'KEY_UP': moveup,
+		'KEY_LEFT' : moveleft,
+		'KEY_RIGHT' : moveright,
+		'q' : quit,
+		'g' : generateDirt
+		}
+
+
+
+if __name__ == '__main__':
+	wrapper(main)
