@@ -5,7 +5,6 @@ import pdb
 y = 9
 x = 11
 loop = True
-hasChanges = False
 dirt = []
 maxyx = []
 
@@ -26,10 +25,8 @@ def main(win):
 		win.addch(y, x, ' ')
 		if key in keymappings:
 			keymappings[key]()
-		if hasChanges:
-			doChanges(win)
-		win.addch(y, x, '&')
-		win.move(y, x)
+		checkForCollision(win, y, x)
+		drawChanges(win)
 
 def quit():
 	global loop
@@ -53,22 +50,28 @@ def movedown():
 
 def generateDirt():
 	global dirt
-	global hasChanges
-	hasChanges = True
 	for yes in range(maxyx[0]-15):
 		line = ''
 		for xes in range(maxyx[1]-2):
 			line+='#'
 		dirt.append(line)
 
-def doChanges(win):
-	global hasChanges
+def drawChanges(win):
 	global dirt
 	for i in range(len(dirt)):
 		line = dirt[i]
 		win.addstr(i+10, 1, line)
 	dirt = []
-	hasChanges = False
+	win.addch(y, x, '&')
+	win.move(y, x)
+
+def checkForCollision(win, oldy, oldx):
+	global x,y
+	if(win.inch(y,x) != 32):
+		pdb.set_trace()
+		x = oldx
+		y = oldy
+
 
 keymappings = {
 		'KEY_DOWN' : movedown,
