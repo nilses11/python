@@ -85,9 +85,9 @@ s = makeboard()
 
 while s != "q":
     s = printboard(s)
-    tmp = input()
-    if tmp == "q":
-        s = tmp
+    inputCommand = input()
+    if inputCommand == "q":
+        s = inputCommand
     else:
         s = next_step(s)
         os.system('clear')
